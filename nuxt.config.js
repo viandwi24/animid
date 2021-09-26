@@ -1,4 +1,9 @@
 export default {
+  // generate
+  generate: {
+    dir: 'docs'
+  },
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'Animid - Anime, Manga, Japan Culture Database & Community',
@@ -58,5 +63,10 @@ export default {
       solid: true,
       brands: true
     }
+  },
+
+  // router
+  router: {
+    base: '/animid'
   }
 }
