@@ -5,7 +5,7 @@
       <template #items="{ nav, activeItem }">
         <CarouselItem v-for="(item, i) in carouselItems" :key="i" :index="i">
           <div class="image-container">
-            <img :src="item.image" alt="Image">
+            <img :src="$static(item.image)" alt="Image">
           </div>
           <div class="content flex flex-col justify-between">
             <div class="flex-1 container">

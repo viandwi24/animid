@@ -43,4 +43,10 @@ function fakeHttp(instanceOptions = {}) {
 export default function({ app }, inject) {
   inject('http', fakeHttp)
   inject('sleep', (ms) => new Promise(resolve => setTimeout(resolve, ms)))
+  inject('static', (url) => {
+    if (url.charAt(0) === '/') {
+        return app.router.options.base + url.substr(1);
+    }
+    return url;
+});
 }

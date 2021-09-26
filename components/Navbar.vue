@@ -2,7 +2,7 @@
   <div class="navbar">
     <div class="container mx-auto px-4 flex">
       <div class="brand">
-        <img src="/images/logo/white_46.png" alt="Logo">
+        <img :src="$static('/images/logo/white_46.png')" alt="Logo">
         AnimID
       </div>
       <div class="menu">
@@ -26,7 +26,7 @@
         <div class="item">
           <button class="link button-avatar">
             <div class="avatar">
-              <img src="/images/avatars/1.png" alt="Avatar">
+              <img :src="$static('/images/avatars/1.png')" alt="Avatar">
             </div>
             <div class="dropdown">
               <div class="icon">
