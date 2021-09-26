@@ -1,9 +1,9 @@
 <template>
-  <div class="carousel-container">
+  <div ref="carouselContainer" class="carousel-container overflow-hidden">
       <div class="nav prev" @click="prev">
         <span><font-awesome-icon :icon="['fas', 'chevron-left']" /></span>
       </div>
-      <div class="container mx-auto carousel">
+      <div class="container mx-auto px-4 relative carousel">
         <slot ref="items" :activeItem="activeItem" />
       </div>
       <div class="nav next" @click="next">
@@ -16,8 +16,9 @@
 import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  setup(_props, { slots }) {
-    const { init, next, prev, activeItem } = useCarousel()
+  setup(_props) {
+    const carouselContainer = ref(null)
+    const { init, next, prev, activeItem } = useCarousel({ carouselContainer })
 
     onMounted(init)
 
@@ -25,22 +26,24 @@ export default defineComponent({
       activeItem,
       next,
       prev,
+      carouselContainer
     }
   },
 })
 
-function useCarousel() {
+function useCarousel({ carouselContainer }) {
   const activeItem = ref(0)
   const items = ref(undefined)
 
   const init = () => {
-    items.value = document.querySelector('.carousel-container').querySelectorAll('.item-container')
+    items.value = carouselContainer.value.querySelectorAll('.item-container')
     updatePosition()
   }
 
   const updatePosition = () => {
     items.value.forEach((container, index) => {
       const item = container.querySelector('.item')
+      const imageContainer = container.querySelector('.image-container')
       const content = item.querySelector('.content')
 
       if (index === activeItem.value) {
@@ -51,6 +54,7 @@ function useCarousel() {
         container.style.opacity = 1
         item.style.backgroundColor = '#F9FAFB'
         content.style.opacity = 1
+        imageContainer.style.opacity = 1
       } else {
         container.style.display = 'block'
         container.style.position = 'absolute'
@@ -61,6 +65,7 @@ function useCarousel() {
         container.style.opacity = 1
         item.style.backgroundColor = '#6CB1EF'
         content.style.opacity = 0
+        imageContainer.style.opacity = 0
       }
     })
   }
@@ -71,19 +76,6 @@ function useCarousel() {
     activeItem.value = nextItemIndex
     const prevItem = items.value[prevItemIndex]
     const nextItem = items.value[nextItemIndex]
-    animateNav(prevItem, nextItem)
-  }
-
-  const prev = () => {
-    const prevItemIndex = activeItem.value
-    const nextItemIndex = (prevItemIndex - 1 + items.value.length) % items.value.length
-    activeItem.value = nextItemIndex
-    const prevItem = items.value[prevItemIndex]
-    const nextItem = items.value[nextItemIndex]
-    animateNav(prevItem, nextItem)
-  }
-
-  const animateNav = (prevItem, nextItem) => {
     items.value.forEach((container, index) => {
       if (index === prevItem || index === nextItem) return
       container.style.opacity = 0
@@ -104,10 +96,61 @@ function useCarousel() {
       ], {
         duration: 500,
         easing: 'ease-in-out',
+      }).onfinish = () => updatePosition()
+      nextItem.querySelector('.image-container').animate([
+        { opacity: 0 },
+        { opacity: 1 },
+      ], {
+        duration: 500,
+        easing: 'ease-in-out',
+      })
+      nextItem.querySelector('.item .content').animate([
+        { opacity: 0 },
+        { opacity: 1 },
+      ], {
+        duration: 500,
+        easing: 'ease-in-out',
+      })
+    }, 100)
+  }
+
+  const prev = () => {
+    const prevItemIndex = activeItem.value
+    const nextItemIndex = (prevItemIndex - 1 + items.value.length) % items.value.length
+    const prevItem = items.value[prevItemIndex]
+    const nextItem = items.value[nextItemIndex]
+
+    items.value.forEach((container, index) => {
+        if (index === prevItemIndex || index === nextItemIndex) return
+      container.style.opacity = 0
+    })
+
+    nextItem.animate([
+      { opacity: 0, transform: 'translateX(-100%) scale(1)' },
+      { opacity: 1, transform: 'translateX(0%) scale(1)' },
+    ], {
+      duration: 500,
+      easing: 'ease-in-out',
+    })
+
+    setTimeout(() => {
+      prevItem.animate([
+        { opacity: 1, transform: 'translateX(0%) scale(1)' },
+        { opacity: 0, transform: 'translateX(7%) scale(0.9)' },
+      ], {
+        duration: 500,
+        easing: 'ease-in-out',
       })
     }, 100)
 
-    setTimeout(updatePosition, 500)
+    activeItem.value = nextItemIndex
+    setTimeout(() => {
+      items.value.forEach((container, index) => {
+        if (index === prevItemIndex || index === nextItemIndex) return
+        container.style.opacity = 0
+      })
+      updatePosition(updatePosition)
+    }, 400)
   }
 
   return {

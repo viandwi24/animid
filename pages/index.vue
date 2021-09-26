@@ -1,30 +1,10 @@
 <template>
   <div class="header">
-    <div class="navbar">
-      <div class="container mx-auto flex">
-        <div class="brand">
-          MyAnimeList
-        </div>
-        <div class="menu items-center">
-          <div class="item">
-            <NuxtLink to="/" tag="a" class="item">ANIME</NuxtLink>
-          </div>
-          <div class="item">
-            <NuxtLink to="/" tag="a" class="item">MANGA</NuxtLink>
-          </div>
-          <div class="item">
-            <NuxtLink to="/" tag="a" class="item">COMMUNITY</NuxtLink>
-          </div>
-          <div class="item">
-            <NuxtLink to="/" tag="a" class="item">BLOG</NuxtLink>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Navbar />
     <Carousel class="mt-5">
-      <CarouselItem index="0">
+      <CarouselItem v-for="(item, i) in carouselItems" :key="i" :index="i">
         <div class="image-container">
-          <img src="/images/news/2.jpeg" alt="Image">
+          <img :src="item.image" alt="Image">
         </div>
         <div class="content">
           <div class="mb-4">
@@ -36,43 +16,7 @@
             </div>
           </div>
           <div class="text-4xl font-semibold mb-4 text-black">
-            Love Live! Superstar!! Tampilkan Para Anggota Liella! Lewat PV Baru Anime
-          </div>
-        </div>
-      </CarouselItem>
-      <CarouselItem index="1">
-        <div class="image-container">
-          <img src="/images/news/4.jpeg" alt="Image">
-        </div>
-        <div class="content">
-          <div class="mb-4">
-            <div class="badge">
-              Featured
-            </div>
-            <div class="badge">
-              News
-            </div>
-          </div>
-          <div class="text-4xl font-semibold mb-4 text-black">
-            MAPPA Tampilkan PV Perdana Anime takt op. Destiny
-          </div>
-        </div>
-      </CarouselItem>
-      <CarouselItem index="2">
-        <div class="image-container">
-          <img src="/images/news/5.jpeg" alt="Image">
-        </div>
-        <div class="content">
-          <div class="mb-4">
-            <div class="badge">
-              Featured
-            </div>
-            <div class="badge">
-              News
-            </div>
-          </div>
-          <div class="text-4xl font-semibold mb-4 text-black">
-            Hasil Voting Popularitas Karakter Jaku-Chara Tomozaki-kun Dirilis
+            {{ item.title }}
           </div>
         </div>
       </CarouselItem>
@@ -81,7 +25,48 @@
 </template>
 
 <script>
-export default {}
+import { defineComponent, onMounted, reactive, useContext, useFetch } from "@nuxtjs/composition-api";
+
+export default defineComponent({
+  setup() {
+    // composable
+    const { fetchData, carouselItems } = useData()
+
+    // life cycle hook
+    onMounted(fetchData)
+
+    // return
+    return {
+      carouselItems
+    }
+  }
+})
+
+function useData() {
+  const { $http } = useContext()
+  const carouselItems = reactive([])
+
+  // methods
+  const { fetch } = useFetch(async () => {
+    try {
+      // fetch data
+      const res = await $http({
+        method: "GET",
+        url: "/carousel",
+      })
+      // clear items
+      carouselItems.splice(0, carouselItems.length)
+      // push new items
+      carouselItems.push(...res.data)
+    } catch (error) {
+    }
+  })
+
+  return {
+    carouselItems,
+    fetchData: fetch
+  }
+}
 </script>
 
 <style lang="scss">
