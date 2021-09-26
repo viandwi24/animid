@@ -1,11 +1,11 @@
 <template>
   <div ref="carouselContainer" class="carousel-container overflow-hidden">
-      <div class="nav prev" @click="prev">
+      <div v-if="activeItem > 0" class="nav prev" @click="prev">
         <span><font-awesome-icon :icon="['fas', 'chevron-left']" /></span>
       </div>
       <div class="container mx-auto px-4 relative carousel">
         <slot
-          ref="items"
+          ref="carouselItems"
           name="items"
           :activeItem="activeItem"
           :next="next"
@@ -13,7 +13,7 @@
           :nav="nav"
         />
       </div>
-      <div class="nav next" @click="next">
+      <div v-if="activeItem < (itemCount-1)" class="nav next" @click="next">
         <span><font-awesome-icon :icon="['fas', 'chevron-right']" /></span>
       </div>
     </div>
@@ -25,11 +25,16 @@ import { defineComponent, onMounted, ref, useContext } from '@nuxtjs/composition
 export default defineComponent({
   setup(_props) {
     const carouselContainer = ref(null)
-    const { init, next, prev, nav, activeItem, indicatorEl } = useCarousel({ carouselContainer })
+    const { init, next, prev, nav, activeItem, itemCount, indicatorEl } = useCarousel({ carouselContainer })
 
-    onMounted(init)
+    onMounted(() => {
+      setTimeout(() => {
+        init()
+      }, 50);
+    })
 
     return {
+      itemCount,
       activeItem,
       next,
       prev,
@@ -44,10 +49,12 @@ function useCarousel({ carouselContainer }) {
   const { $sleep } = useContext()
 
   const activeItem = ref(0)
+  const itemCount = ref(0)
   const items = ref(undefined)
 
   const init = () => {
     items.value = carouselContainer.value.querySelectorAll('.item-container')
+    itemCount.value = items.value.length
     updatePosition()
   }
 
@@ -188,7 +195,8 @@ function useCarousel({ carouselContainer }) {
     updatePosition,
     next,
     prev,
-    nav
+    nav,
+    itemCount
   }
 }
 

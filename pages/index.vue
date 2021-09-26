@@ -44,7 +44,9 @@ export default defineComponent({
     const { fetchData, carouselItems } = useData()
 
     // life cycle hook
-    onMounted(fetchData)
+    onMounted(() => {
+      fetchData()
+    })
 
     // return
     return {
