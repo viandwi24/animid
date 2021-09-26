@@ -4,7 +4,14 @@
         <span><font-awesome-icon :icon="['fas', 'chevron-left']" /></span>
       </div>
       <div class="container mx-auto px-4 relative carousel">
-        <slot ref="items" :activeItem="activeItem" />
+        <slot
+          ref="items"
+          name="items"
+          :activeItem="activeItem"
+          :next="next"
+          :prev="prev"
+          :nav="nav"
+        />
       </div>
       <div class="nav next" @click="next">
         <span><font-awesome-icon :icon="['fas', 'chevron-right']" /></span>
@@ -13,12 +20,12 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, useContext } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   setup(_props) {
     const carouselContainer = ref(null)
-    const { init, next, prev, activeItem } = useCarousel({ carouselContainer })
+    const { init, next, prev, nav, activeItem, indicatorEl } = useCarousel({ carouselContainer })
 
     onMounted(init)
 
@@ -26,12 +33,16 @@ export default defineComponent({
       activeItem,
       next,
       prev,
-      carouselContainer
+      nav,
+      carouselContainer,
+      indicatorEl
     }
   },
 })
 
 function useCarousel({ carouselContainer }) {
+  const { $sleep } = useContext()
+
   const activeItem = ref(0)
   const items = ref(undefined)
 
@@ -153,13 +164,31 @@ function useCarousel({ carouselContainer }) {
     }, 400)
   }
 
+  const nav = async (index) => {
+    if (index === activeItem.value) return
+    if (index > activeItem.value) {
+      const offset = index - activeItem.value
+      for (let i = 0; i < offset; i++) {
+        await $sleep(100)
+        next()
+      }
+    } else {
+      const offset = activeItem.value - index
+      for (let i = 0; i < offset; i++) {
+        await $sleep(100)
+        prev()
+      }
+    }
+  }
+
   return {
     activeItem,
     items,
     init,
     updatePosition,
     next,
-    prev
+    prev,
+    nav
   }
 }
 

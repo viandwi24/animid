@@ -42,4 +42,5 @@ function fakeHttp(instanceOptions = {}) {
 
 export default function({ app }, inject) {
   inject('http', fakeHttp)
+  inject('sleep', (ms) => new Promise(resolve => setTimeout(resolve, ms)))
 }
