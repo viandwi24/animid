@@ -2,7 +2,8 @@
   <div class="navbar">
     <div class="container mx-auto px-4 flex">
       <div class="brand">
-        MyAnimeList
+        <img src="/images/logo/white_46.png" alt="Logo">
+        AnimID
       </div>
       <div class="menu">
         <div class="item">
