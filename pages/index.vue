@@ -2,7 +2,7 @@
   <div>
     <div class="header" :style="`background-image: url('${$static('/images/news/3.jpeg')}');`">
       <Navbar />
-      <Carousel v-if="true" class="mt-5">
+      <Carousel v-if="true" class="mt-5 mb-8">
         <template #items="{ nav, activeItem }">
           <CarouselItem v-for="(item, i) in carouselItems" :key="i" :index="i">
             <div class="image-container">
@@ -10,12 +10,9 @@
             </div>
             <div class="content flex flex-col justify-between">
               <div class="flex-1 container">
-                <div class="mb-4">
-                  <div class="badge">
-                    Featured
-                  </div>
-                  <div class="badge">
-                    News
+                <div class="mb-2">
+                  <div v-for="(tag, j) in item.tags" :key="j" class="badge">
+                    {{ tag }}
                   </div>
                 </div>
                 <div class="text-4xl font-semibold mb-4">

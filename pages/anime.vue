@@ -1,3 +1,5 @@
 <template>
-  <NuxtLink to="/" tag="a">aweawe</NuxtLink>
+  <div class="header" :style="`background-image: url('${$static('/images/news/3.jpeg')}');`">
+    <Navbar />
+  </div>
 </template>

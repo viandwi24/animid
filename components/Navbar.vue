@@ -6,23 +6,11 @@
         <span>AnimID</span>
       </NuxtLink>
       <div class="menu">
-        <div class="item">
-          <NuxtLink to="/anime" tag="a" class="link">ANIME</NuxtLink>
-        </div>
-        <div class="item">
-          <NuxtLink to="/" tag="a" class="link">MANGA</NuxtLink>
-        </div>
-        <div class="item">
-          <NuxtLink to="/" tag="a" class="link">MUSIC</NuxtLink>
-        </div>
-        <div class="item">
-          <NuxtLink to="/" tag="a" class="link">V-TUBER</NuxtLink>
-        </div>
-        <div class="item">
-          <NuxtLink to="/" tag="a" class="link">COMMUNITY</NuxtLink>
-        </div>
-        <div class="item">
-          <NuxtLink to="/" tag="a" class="link">BLOG</NuxtLink>
+        <div v-for="(item, i) in navbarActionItems" :key="i" class="item">
+          <NuxtLink :to="item.to" tag="a" class="link">
+            <!-- <font-awesome-icon :icon="item.icon" /> -->
+            <span>{{ item.text }}</span>
+          </NuxtLink>
         </div>
         <div class="item">
           <button class="link button-search">
@@ -68,15 +56,49 @@
 </template>
 
 <script>
-import { defineComponent, onBeforeUnmount, onMounted, ref, watch } from '@vue/composition-api'
+import { defineComponent, onBeforeUnmount, onMounted, reactive, ref, watch } from '@vue/composition-api'
 
 export default defineComponent({
   setup() {
     const { theme, toggleTheme } = useTheme()
 
+    const navbarActionItems = reactive([
+      {
+        text: 'ANIME',
+        to: '/anime',
+        icon: ['fas', 'play']
+      },
+      {
+        text: 'MANGA',
+        to: '/manga',
+        icon: ['fas', 'book-open']
+      },
+      {
+        text: 'MUSIC',
+        to: '/music',
+        icon: ['fas', 'music']
+      },
+      {
+        text: 'V-TUBER',
+        to: '/v-tuber',
+        icon: ['fas', 'paw']
+      },
+      {
+        text: 'COMMUNITY',
+        to: '/community',
+        icon: ['fas', 'campground']
+      },
+      {
+        text: 'BLOG',
+        to: '/blog',
+        icon: ['fas', 'newspaper']
+      },
+    ])
+
     return {
       theme,
-      toggleTheme
+      toggleTheme,
+      navbarActionItems
     }
   },
 })
