@@ -91,7 +91,7 @@ function useCarousel({ carouselContainer }) {
           item.style.removeAttribute('transition')
         } catch (error) {
         }
-        item.style.backgroundColor = '#6CB1EF'
+        item.style.backgroundColor = '#48a9ff'
         content.style.opacity = 0
         imageContainer.style.opacity = 0
       }
@@ -121,8 +121,8 @@ function useCarousel({ carouselContainer }) {
         nextItem.style.marginLeft = '1rem'
         nextItem.style.marginRight = '1rem'
         nextItem.animate([
-          { opacity: 0, transform: 'translateX(7%) scale(0.9)' },
-          { opacity: 1, transform: 'translateX(0%) scale(1)' },
+          { opacity: 0, transform: 'translateX(7%) scaleX(0.9) scaleY(0.9)' },
+          { opacity: 1, transform: 'translateX(0%) scaleX(0.97) scaleY(1)' },
         ], {
           duration: 500,
           easing: 'ease-in-out',

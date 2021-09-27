@@ -13,6 +13,12 @@
           <NuxtLink to="/" tag="a" class="link">MANGA</NuxtLink>
         </div>
         <div class="item">
+          <NuxtLink to="/" tag="a" class="link">MUSIC</NuxtLink>
+        </div>
+        <div class="item">
+          <NuxtLink to="/" tag="a" class="link">V-TUBER</NuxtLink>
+        </div>
+        <div class="item">
           <NuxtLink to="/" tag="a" class="link">COMMUNITY</NuxtLink>
         </div>
         <div class="item">
@@ -85,8 +91,12 @@ function useTheme() {
   }
   onMounted(() => {
     const mql = window.matchMedia("(prefers-color-scheme: dark)")
-    mql.addEventListener('change', onSystemThemeChange);
-    theme.value = (mql.matches)
+    mql.addEventListener('change', onSystemThemeChange)
+    if (localStorage.getItem('theme')) {
+      theme.value = (localStorage.getItem('theme') === 'dark')
+    } else {
+      theme.value = (mql.matches)
+    }
   })
   onBeforeUnmount(() => {
     window.matchMedia('(prefers-color-scheme: dark)').removeEventListener('change', onSystemThemeChange);
@@ -174,8 +184,8 @@ function useTheme() {
   }
   .label {
     cursor: pointer;
-    width: 38px;
-    height: 20px;
+    width: 40px;
+    height: 22px;
     background-color: theme('colors.blue.600');
     display: flex;
     border-radius:50px;
@@ -186,19 +196,20 @@ function useTheme() {
     transform: scale(1.5);
   }
   .ball {
-    width: 14px;
-    height: 14px;
-    background-color: white;
+    width: 16px;
+    height: 16px;
+    background-color: theme('colors.white');
     position: absolute;
     top: 3px;
     left: 0;
     margin-left: 4px;
     margin-right: 3px;
     border-radius: 50%;
-    transition: transform 0.2s linear;
+    transition: all 0.3s linear;
   }
-  .checkbox:checked + .label .ball{
+  .checkbox:checked + .label .ball {
     transform: translateX(17px);
+    background-color: theme('colors.black');
   }
   .fa-moon, .fa-sun {
     font-size: .6rem;

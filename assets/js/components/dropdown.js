@@ -1,7 +1,30 @@
-document.addEventListener('DOMContentLoaded', function() {
+export function initDropdown () {
   const dropdowns = document.querySelectorAll('.dropdown')
   dropdowns.forEach(dropdown => {
-    const menu = dropdown.querySelector('.menu')
+    let menu = dropdown.querySelector('.menu')
+
+    const outsideElementOnClick = (event) => {
+      if (menu.classList.contains('show')) {
+        toggle(event)
+      }
+    }
+    const dropdownOnClick = (event) => {
+      toggle(event)
+    }
+
+    //
+    try {
+      const dropdownClone = dropdown.cloneNode(true)
+      dropdown.parentNode.replaceChild(dropdownClone, dropdown)
+      dropdown = dropdownClone
+
+      const menuClone = menu.cloneNode(true)
+      menu.parentNode.replaceChild(menuClone, menu)
+      menu = dropdown.querySelector('.menu')
+    } catch (error) {
+    }
+
+    //
     const toggle = (event) => {
       event.stopPropagation()
       if (menu.classList.contains('show')) {
@@ -12,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
           duration: 200,
           easing: 'ease-in-out'
         })
-        animate.onfinish = () => menu.classList.toggle('show')
+        animate.onfinish = () => menu.classList.remove('show')
       } else {
         menu.classList.add('show')
         menu.animate([
@@ -24,13 +47,11 @@ document.addEventListener('DOMContentLoaded', function() {
         })
       }
     }
-    document.addEventListener('click', function(event) {
-      if (menu.classList.contains('show')) {
-        toggle(event)
-      }
-    })
-    dropdown.addEventListener('click', function(event) {
-      toggle(event)
-    })
+
+    //
+    document.removeEventListener('click', outsideElementOnClick)
+    dropdown.removeEventListener('click', dropdownOnClick)
+    document.addEventListener('click', outsideElementOnClick)
+    dropdown.addEventListener('click', dropdownOnClick)
   })
-})
+}

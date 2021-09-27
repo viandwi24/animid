@@ -35,7 +35,7 @@
       </Carousel>
     </div>
     <section class="container mx-auto px-4 my-10 md:my-40">
-      <div class="flex flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0">
+      <div class="flex flex-col space-y-4 lg:flex-row lg:space-x-4 lg:space-y-0">
         <CardHero v-for="(item, i) in animeHighlightedItems" :key="i" :anime="item" />
       </div>
     </section>

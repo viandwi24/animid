@@ -14,7 +14,8 @@
       .item {
         box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
         transition: background .5s ease-in-out;
-        background: var(--background-color);
+        background: #6CB1EF;
+        // background: #48a9ff;
         position: relative;
         height: 500px;
         display: flex;
@@ -163,6 +164,19 @@
       transform: translateY(-50%);
       color: theme('colors.primary');
       background: theme('colors.white');
+    }
+  }
+}
+
+
+html.dark {
+  .carousel-container {
+    .carousel {
+      .item-container {
+        .item {
+          background: #284157;
+        }
+      }
     }
   }
 }
