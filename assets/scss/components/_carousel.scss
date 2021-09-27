@@ -6,12 +6,17 @@
       border-radius: 1.75rem;
       overflow: hidden;
       display: none;
-      // position: absolute;
+
+      &:first-child {
+        display: block;
+      }
+
       .item {
         box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        transition: background .5s ease-in-out;
+        background: var(--background-color);
         position: relative;
         height: 500px;
-        background: theme('colors.white');
         display: flex;
         flex-direction: column;
 
@@ -30,7 +35,10 @@
         .content {
           width: 100%;
           padding: 1rem;
-          // display: block;
+          .container {
+            transition: color .5s ease-in-out;
+            color: var(--text-color);
+          }
         }
       }
     }

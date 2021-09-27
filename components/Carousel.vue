@@ -70,7 +70,12 @@ function useCarousel({ carouselContainer }) {
         container.style.zIndex = 3
         container.style.transform = ''
         container.style.opacity = 1
-        item.style.backgroundColor = '#F9FAFB'
+        item.style.transition = 'transition: background .8s ease-in-out'
+        try {
+          item.style.removeProperty('background-color')
+          item.style.removeAttribute('background-color')
+        } catch (error) {
+        }
         content.style.opacity = 1
         imageContainer.style.opacity = 1
       } else {
@@ -81,6 +86,11 @@ function useCarousel({ carouselContainer }) {
         container.style.zIndex = 2
         container.style.transform = 'translateX(7%) scale(0.9)'
         container.style.opacity = 1
+        try {
+          item.style.removeProperty('transition')
+          item.style.removeAttribute('transition')
+        } catch (error) {
+        }
         item.style.backgroundColor = '#6CB1EF'
         content.style.opacity = 0
         imageContainer.style.opacity = 0
@@ -94,42 +104,47 @@ function useCarousel({ carouselContainer }) {
     activeItem.value = nextItemIndex
     const prevItem = items.value[prevItemIndex]
     const nextItem = items.value[nextItemIndex]
-    items.value.forEach((container, index) => {
-      if (index === prevItem || index === nextItem) return
-      container.style.opacity = 0
-    })
-
-    prevItem.animate([
-      { opacity: 1, transform: 'translateX(0%) scale(1)' },
-      { opacity: 0, transform: 'translateX(-100%) scale(1)' },
-    ], {
-      duration: 500,
-      easing: 'ease-in-out',
-    })
 
     setTimeout(() => {
-      nextItem.animate([
-        { opacity: 0, transform: 'translateX(7%) scale(0.9)' },
+      items.value.forEach((container, index) => {
+        if (index === prevItem || index === nextItem) return
+        container.style.opacity = 0
+      })
+      prevItem.animate([
         { opacity: 1, transform: 'translateX(0%) scale(1)' },
-      ], {
-        duration: 500,
-        easing: 'ease-in-out',
-      }).onfinish = () => updatePosition()
-      nextItem.querySelector('.image-container').animate([
-        { opacity: 0 },
-        { opacity: 1 },
+        { opacity: 0, transform: 'translateX(-100%) scale(1)' },
       ], {
         duration: 500,
         easing: 'ease-in-out',
       })
-      nextItem.querySelector('.item .content').animate([
-        { opacity: 0 },
-        { opacity: 1 },
-      ], {
-        duration: 500,
-        easing: 'ease-in-out',
-      })
-    }, 100)
+      setTimeout(() => {
+        nextItem.style.marginLeft = '1rem'
+        nextItem.style.marginRight = '1rem'
+        nextItem.animate([
+          { opacity: 0, transform: 'translateX(7%) scale(0.9)' },
+          { opacity: 1, transform: 'translateX(0%) scale(1)' },
+        ], {
+          duration: 500,
+          easing: 'ease-in-out',
+        }).onfinish = () => {
+          updatePosition()
+        }
+        nextItem.querySelector('.image-container').animate([
+          { opacity: 0 },
+          { opacity: 1 },
+        ], {
+          duration: 500,
+          easing: 'ease-in-out',
+        })
+        nextItem.querySelector('.item .content').animate([
+          { opacity: 0 },
+          { opacity: 1 },
+        ], {
+          duration: 500,
+          easing: 'ease-in-out',
+        })
+      }, 1)
+    }, 1)
   }
 
   const prev = () => {

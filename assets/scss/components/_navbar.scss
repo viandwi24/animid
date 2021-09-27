@@ -21,13 +21,18 @@
         margin-right: 0.5rem;
         display: inline-block;
       }
+
+      span {
+        // display: none;
+      }
     }
 
     & > .menu {
+      flex: 1 1 0%;
       display: none;
-      justify-content: flex-end;
       align-self: center;
       align-items: center;
+      justify-content: flex-end;
 
       & > .item {
         align-items: center;

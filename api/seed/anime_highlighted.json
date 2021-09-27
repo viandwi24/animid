@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Tokyo Revengers",
+    "description": "Tokyo Revengers is a Japanese action-adventure film based on the manga series of the same name. It was directed by Hideaki Anno and written by Hideaki Anno and Hiroaki Takahata, and released in Japan on December 23, 2007, and in North America on January 25, 2008.",
+    "year": 2021,
+    "season": 1,
+    "background": "/images/backgrounds/tokyo-revengers.jpeg",
+    "hero": "/images/heroes/mickey.png"
+  },
+  {
+    "title": "Demon Slayer",
+    "description": "Demon Slayer is a Japanese action-adventure film based on the manga series of the same name. It was directed by Hideaki Anno and written by Hideaki Anno and Hiroaki Takahata, and released in Japan on December 23, 2007, and in North America on January 25, 2008.",
+    "year": 2021,
+    "season": 2,
+    "background": "/images/backgrounds/demon-slayer.jpeg",
+    "hero": "/images/heroes/tanjiro.png"
+  }
+]

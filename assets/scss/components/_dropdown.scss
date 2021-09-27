@@ -3,27 +3,40 @@
   .menu {
     overflow: hidden;
     display: none;
-    width: 200px;
+    width: 180px;
     position: absolute;
-    margin-top: 2rem;
+    margin-top: 2.2rem;
     top: 0;
     right: 0;
-    background: theme('colors.white');
+    background: var(--background-color);
     z-index: 10;
     flex-direction: column;
     box-shadow: 0 0 10px rgba(0, 0, 0, .3);
     border-radius: .3rem;
+
     .item {
       text-align: left;
       font-size: .85rem;
-      color: theme('colors.black');
+      color: var(--text-color);
       padding: .5rem .65rem;
-      border-bottom: 1px solid rgba(0, 0, 0, .1);
-      &:last-child {
-        border-bottom: none;
+      padding-bottom: 0;
+
+      & > .link {
+        display: block;
+        border-radius: .3rem;
+        padding: .5rem .65rem;
       }
+
+      &:last-child {
+        padding-top: .2rem;
+        padding-bottom: .5rem;
+      }
+
       &:hover {
-        background: theme('colors.gray.100');
+        & > .link {
+          background: theme('colors.gray.200');
+          color: theme('colors.primary');
+        }
       }
     }
 

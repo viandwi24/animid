@@ -3,6 +3,16 @@
 // vendors
 @import './vendors/tailwind.scss';
 
+// variables
+:root {
+  --background-color: #F9FAFB;
+  --text-color: #1F2937;
+}
+html.dark {
+  --background-color: #1F2937;
+  --text-color: #F9FAFB;
+}
+
 // components
 @import './components/navbar';
 @import './components/carousel';
@@ -12,11 +22,9 @@
 * {
   font-family: 'Poppins', sans-serif;
 }
-
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: theme('colors.gray.800');
-  }
+body {
+  transition: .8s ease-in-out;
+  transition-property: background color;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
-
-

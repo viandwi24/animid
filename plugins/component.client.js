@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 const mixin = {
   mounted() {
-    require('@/assets/js/dropdown')
+    require('~/assets/js/components/dropdown')
   }
 }
 

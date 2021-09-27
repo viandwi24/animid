@@ -18,5 +18,7 @@ module.exports = {
         ]
       }
     ],
+    // no-invalid-position-at-import-rule
+    'no-invalid-position-at-import-rule': false,
   }
 }

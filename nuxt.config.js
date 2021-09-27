@@ -17,7 +17,7 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/images/logo/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/animid/images/logo/favicon.ico' }
     ]
   },
 
