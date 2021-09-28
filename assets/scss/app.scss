@@ -6,10 +6,14 @@
 // variables
 :root {
   --background-color: #F9FAFB;
+  --background-darken-color: #e5e7eb;
   --text-color: #1F2937;
+  --navbar-height: 110px;
+  --footer-height: 337px;
 }
 html.dark {
   --background-color: #1F2937;
+  --background-darken-color: #2c3847;
   --text-color: #F9FAFB;
 }
 
@@ -27,4 +31,21 @@ body {
   transition-property: background color;
   background-color: var(--background-color);
   color: var(--text-color);
+}
+
+
+//
+.screen {
+  min-height: calc(100vh - var(--navbar-height) - var(--footer-height));
+}
+
+
+// transitions
+.default-enter-active, .default-leave-active {
+  transition: opacity .5s ease-out;
+  transform: scale(1);
+}
+.default-enter, .default-leave-active {
+  opacity: 0;
+  transform: scale(0.5);
 }

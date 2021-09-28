@@ -1,6 +1,6 @@
 <template>
   <div>
-    Anime
+    Manga
   </div>
 </template>
 
@@ -11,7 +11,7 @@ export default defineComponent({
   layout: 'page',
   head() {
     return {
-      title: 'Search Anime',
+      title: 'Search Manga',
     }
   }
 })

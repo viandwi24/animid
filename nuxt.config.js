@@ -6,7 +6,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Animid - Anime, Manga, J-POP, Vtuber, and Japan Culture Database & Community',
+    title: 'AnimID - Anime, Manga, J-POP, Vtuber, and Japan Culture Database & Community',
     htmlAttrs: {
       lang: 'en'
     },

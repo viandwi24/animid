@@ -1,6 +1,6 @@
 .dropdown {
   position: relative;
-  .menu {
+  & > .menu {
     overflow: hidden;
     display: none;
     width: 180px;
@@ -14,7 +14,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, .3);
     border-radius: .3rem;
 
-    .item {
+    & > .item {
       text-align: left;
       font-size: .85rem;
       color: var(--text-color);
@@ -34,7 +34,7 @@
 
       &:hover {
         & > .link {
-          background: theme('colors.gray.200');
+          background: var(--background-darken-color);
           color: theme('colors.primary');
         }
       }

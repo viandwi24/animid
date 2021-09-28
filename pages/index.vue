@@ -31,11 +31,17 @@
         </template>
       </Carousel>
     </div>
-    <section class="container mx-auto px-4 my-10 md:my-40">
-      <div class="flex flex-col space-y-4 lg:flex-row lg:space-x-4 lg:space-y-0">
-        <CardHero v-for="(item, i) in animeHighlightedItems" :key="i" :anime="item" />
+    <section>
+      <div class="container mx-auto px-4 my-10 md:my-20">
+        <div class="text-4xl font-semibold text-center mb-32">
+          Anime Trending
+        </div>
+        <div class="flex flex-col space-y-4 lg:flex-row lg:space-x-4 lg:space-y-0">
+          <CardHero v-for="(item, i) in animeHighlightedItems" :key="i" :anime="item" />
+        </div>
       </div>
     </section>
+    <Footer />
   </div>
 </template>
 

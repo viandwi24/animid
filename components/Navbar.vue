@@ -6,7 +6,7 @@
         <span>AnimID</span>
       </NuxtLink>
       <div class="menu">
-        <div v-for="(item, i) in navbarActionItems" :key="i" class="item">
+        <div v-for="(item, i) in navbarActionItems" :key="i" class="item" :class="{ 'active': isActivePage(item.to) }">
           <NuxtLink :to="item.to" tag="a" class="link">
             <!-- <font-awesome-icon :icon="item.icon" /> -->
             <span>{{ item.text }}</span>
@@ -56,16 +56,22 @@
 </template>
 
 <script>
+import { useContext } from '@nuxtjs/composition-api'
 import { defineComponent, onBeforeUnmount, onMounted, reactive, ref, watch } from '@vue/composition-api'
 
 export default defineComponent({
   setup() {
+    //
+    const { route } = useContext()
+
+    // composable
     const { theme, toggleTheme } = useTheme()
 
+    // vars
     const navbarActionItems = reactive([
       {
         text: 'ANIME',
-        to: '/anime',
+        to: { name: 'anime' },
         icon: ['fas', 'play']
       },
       {
@@ -95,10 +101,21 @@ export default defineComponent({
       },
     ])
 
+    // methods
+    const isActivePage = (to) => {
+      if (typeof to === 'string') {
+        return (route.value.path === to)
+      } else {
+        return (route.value.name === to.name)
+      }
+    }
+
+    //
     return {
       theme,
       toggleTheme,
-      navbarActionItems
+      navbarActionItems,
+      isActivePage
     }
   },
 })
@@ -109,7 +126,6 @@ function useTheme() {
   const onSystemThemeChange = e => {
     const systemTheme = e.matches ? "dark" : "light";
     theme.value = (systemTheme === "dark")
-    console.log(systemTheme)
   }
   onMounted(() => {
     const mql = window.matchMedia("(prefers-color-scheme: dark)")

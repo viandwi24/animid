@@ -44,7 +44,7 @@
         text-decoration: none;
         transition: color 0.2s ease-in-out;
 
-        svg {
+        & > svg {
           transition: color 0.2s ease-in-out;
         }
 
@@ -52,9 +52,15 @@
           color: theme('colors.white');
           text-shadow: 2px 2px rgba(0,0,0,0.3);
 
-          svg {
+          & > svg {
             filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, .5));
           }
+        }
+
+        & > .nuxt-link-active {
+          color: theme('colors.white');
+          font-weight: 800;
+          border-bottom: 2px solid theme('colors.white');
         }
       }
     }
