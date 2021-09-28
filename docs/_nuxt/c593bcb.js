@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[6],{308:function(e,n,t){"use strict";t.r(n);var c=t(44),l=Object(c.a)({layout:"page",head:function(){return{title:"Search Anime"}}}),r=t(24),component=Object(r.a)(l,(function(){var e=this,n=e.$createElement;return(e._self._c||n)("div",[e._v("\n  Anime\n")])}),[],!1,null,null,null);n.default=component.exports}}]);
